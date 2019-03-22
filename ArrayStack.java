@@ -4,15 +4,18 @@ public class ArrayStack<T> implements Stack<T> {
 	private T[] array;
 	private int top;
 	
-	
 	public ArrayStack() {
 		array = (T[]) new Object[SIZE];
 		top = -1;
 	}
 	
 	public void push(T item) {
+		if (top >= array.length - 1) {
+			T[] newArray = (T[]) new Object[array.length * 2]; 
+			System.arraycopy(array, 0, newArray, 0, array.length);
+			array = newArray;
+		}
 		array[++top] = item;
-		
 	}
 	
 	public T pop() {
@@ -20,8 +23,7 @@ public class ArrayStack<T> implements Stack<T> {
 			throw new ArrayIndexOutOfBoundsException();
 		} else {
 			return array[top--];
-		}
-		
+		}	
 	}
 	
 	public T peek() {
